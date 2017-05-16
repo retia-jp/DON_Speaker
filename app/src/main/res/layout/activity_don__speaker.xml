@@ -27,7 +27,8 @@
         android:textSize="15sp"
         android:layout_alignEnd="@+id/textView"
         android:layout_below="@+id/cfgCheckBoxReadID"
-        android:layout_toEndOf="@+id/textView3" />
+        android:layout_toEndOf="@+id/textView3"
+        android:layout_alignStart="@+id/button" />
 
     <CheckBox
         android:layout_width="wrap_content"
@@ -38,7 +39,8 @@
         android:textSize="15sp"
         android:layout_alignEnd="@+id/textView"
         android:layout_below="@+id/cfgCheckBoxReadNote"
-        android:layout_toEndOf="@+id/textView3" />
+        android:layout_toEndOf="@+id/textView3"
+        android:layout_alignStart="@+id/button" />
 
     <CheckBox
         android:layout_width="wrap_content"
@@ -49,7 +51,8 @@
         android:textSize="15sp"
         android:layout_alignEnd="@+id/textView"
         android:layout_below="@+id/cfgCheckBoxReadTime"
-        android:layout_toEndOf="@+id/textView3" />
+        android:layout_toEndOf="@+id/textView3"
+        android:layout_alignStart="@+id/button" />
 
     <CheckBox
         android:layout_width="wrap_content"
@@ -60,17 +63,18 @@
         android:textSize="15sp"
         android:layout_alignEnd="@+id/textView"
         android:layout_below="@+id/editText"
-        android:layout_toEndOf="@+id/textView3" />
+        android:layout_toEndOf="@+id/textView3"
+        android:layout_alignStart="@+id/button" />
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="読み上げる内容"
         android:id="@+id/editText"
+        android:layout_marginTop="59dp"
+        android:textSize="18sp"
         android:layout_below="@+id/seekBar2"
-        android:layout_alignParentStart="true"
-        android:layout_marginTop="25dp"
-        android:textSize="18sp" />
+        android:layout_alignParentStart="true" />
 
     <SeekBar
         android:layout_width="wrap_content"
@@ -86,7 +90,9 @@
         android:id="@+id/seekBar2"
         android:layout_centerVertical="true"
         android:layout_alignParentStart="true"
-        android:layout_alignEnd="@+id/seekBar" />
+        android:layout_alignEnd="@+id/seekBar"
+        android:indeterminate="false"
+        android:layout_alignParentEnd="false" />
 
     <TextView
         android:layout_width="wrap_content"
