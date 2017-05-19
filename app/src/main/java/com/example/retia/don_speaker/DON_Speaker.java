@@ -23,6 +23,7 @@ public class DON_Speaker extends AppCompatActivity
     final private Float PITCH_HIGH = 1.5f;
     private TextToSpeech    tts;
     private Button buttonSpeech;
+    private Button buttonStopSpeech;
     private Button buttonSlow;
     private Button buttonNormal;
     private Button buttonFast;
@@ -37,8 +38,9 @@ public class DON_Speaker extends AppCompatActivity
 
         // ボタンのClickListenerの登録
         buttonSpeech = (Button)findViewById(R.id.button);
+        buttonStopSpeech = (Button)findViewById(R.id.button2);
         buttonSpeech.setOnClickListener(this);
-
+        buttonStopSpeech.setOnClickListener(this);
 
         // TextToSpeechオブジェクトの生成
         tts = new TextToSpeech(this, this);
@@ -70,14 +72,18 @@ public class DON_Speaker extends AppCompatActivity
     private void speechText() {
         String string = ((EditText)findViewById(R.id.EditText)).getText().toString();
         if (0 < string.length()) {
-            /**if (tts.isSpeaking()) {
-             // 読み上げ中なら止める
-             tts.stop();
-             }*/
 
-            // 読み上げ開始
             tts.speak(string, TextToSpeech.QUEUE_FLUSH, null);
         }
+    }
+
+    private void stopSpeech() {
+        if (tts.isSpeaking()) {
+         // 読み上げ中なら止める
+         tts.stop();
+         }
+
+        // 読み上げ開始
     }
 
     @Override
@@ -102,6 +108,8 @@ public class DON_Speaker extends AppCompatActivity
         } else if (buttonHighPitch == v) {
             // 再生ピッチの設定
             tts.setPitch(PITCH_HIGH);
+        } else if (buttonStopSpeech == v) {
+            stopSpeech();
         }
     }
 }
