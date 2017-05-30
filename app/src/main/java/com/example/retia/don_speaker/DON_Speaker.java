@@ -74,6 +74,7 @@ public class DON_Speaker extends AppCompatActivity
         if (0 < string.length()) {
 
             tts.speak(string, TextToSpeech.QUEUE_FLUSH, null);
+            // TODO: 読み上げ中に押すと中断されて新しく読み上げるのでストックできるようにする
         }
     }
 
