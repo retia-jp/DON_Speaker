@@ -7,6 +7,8 @@ import android.view.View;
 import android.util.Log;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.SeekBar;
+import android.widget.TextView;
 
 
 import java.util.Locale;
@@ -15,12 +17,6 @@ import java.util.Locale;
 public class DON_Speaker extends AppCompatActivity
         implements View.OnClickListener, TextToSpeech.OnInitListener {
 
-    final private Float SPEECH_SLOW = 0.5f;
-    final private Float SPEECH_NORMAL = 1.0f;
-    final private Float SPEECH_FAST = 1.5f;
-    final private Float PITCH_LOW = 0.5f;
-    final private Float PITCH_NORMAL = 1.0f;
-    final private Float PITCH_HIGH = 1.5f;
     private TextToSpeech    tts;
     private Button buttonSpeech;
     private Button buttonStopSpeech;
@@ -36,6 +32,11 @@ public class DON_Speaker extends AppCompatActivity
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_don__speaker);
 
+        final SeekBar sbVolume = (SeekBar)findViewById(R.id.seekBar);
+        final TextView textVolume = (TextView)findViewById(R.id.textView5);
+        final SeekBar sBSpeed = (SeekBar)findViewById(R.id.seekBar2);
+        final TextView textSpeed = (TextView)findViewById(R.id.textView);
+
         // ボタンのClickListenerの登録
         buttonSpeech = (Button)findViewById(R.id.button);
         buttonStopSpeech = (Button)findViewById(R.id.button2);
@@ -44,6 +45,50 @@ public class DON_Speaker extends AppCompatActivity
 
         // TextToSpeechオブジェクトの生成
         tts = new TextToSpeech(this, this);
+
+        // 音量シークバーの値を表示
+        textVolume.setText(":"+sbVolume.getProgress());
+
+        sbVolume.setOnSeekBarChangeListener(
+                new SeekBar.OnSeekBarChangeListener() {
+                    public void onProgressChanged(SeekBar seekBar,
+                                                  int progress, boolean fromUser) {
+                        // ツマミをドラッグしたときに呼ばれる
+                        textVolume.setText(":" + sbVolume.getProgress());
+
+                    }
+
+                    public void onStartTrackingTouch(SeekBar seekBar) {
+
+                    }
+
+                    public void onStopTrackingTouch(SeekBar seekBar) {
+
+                    }
+                }
+        );
+        // 読み上げ速度シークバーの値を表示
+        textSpeed.setText(":"+sBSpeed.getProgress()/10f);
+        tts.setSpeechRate(sBSpeed.getProgress()/10f);
+
+        sBSpeed.setOnSeekBarChangeListener(
+                new SeekBar.OnSeekBarChangeListener() {
+                    public void onProgressChanged(SeekBar seekBar,
+                                                  int progress, boolean fromUser) {
+                        // ツマミをドラッグしたときに呼ばれる
+                        textSpeed.setText(":" + sBSpeed.getProgress()/10f);
+                        tts.setSpeechRate(sBSpeed.getProgress()/10f);
+                    }
+
+                    public void onStartTrackingTouch(SeekBar seekBar) {
+
+                    }
+
+                    public void onStopTrackingTouch(SeekBar seekBar) {
+
+                    }
+                }
+        );
     }
 
     @Override
@@ -74,7 +119,7 @@ public class DON_Speaker extends AppCompatActivity
         if (0 < string.length()) {
 
             tts.speak(string, TextToSpeech.QUEUE_FLUSH, null);
-            // TODO: 読み上げ中に押すと中断されて新しく読み上げるのでストックできるようにする
+            // TODO: 読み上げが中断されて新しく読み上げるのでストックできるようにする。
         }
     }
 
@@ -91,7 +136,7 @@ public class DON_Speaker extends AppCompatActivity
     public void onClick(View v) {
         if (buttonSpeech == v) {
             speechText();
-        } else if (buttonSlow == v) {
+        /**} else if (buttonSlow == v) {
             // 再生速度の設定
             tts.setSpeechRate(SPEECH_SLOW);
         } else if (buttonNormal == v) {
@@ -108,9 +153,10 @@ public class DON_Speaker extends AppCompatActivity
             tts.setPitch(PITCH_NORMAL);
         } else if (buttonHighPitch == v) {
             // 再生ピッチの設定
-            tts.setPitch(PITCH_HIGH);
+            tts.setPitch(PITCH_HIGH);**/
         } else if (buttonStopSpeech == v) {
             stopSpeech();
         }
     }
+
 }
