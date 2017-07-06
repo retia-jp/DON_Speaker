@@ -17,10 +17,10 @@
                 android:id="@+id/button"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="読み上げ開始"
-                android:layout_marginStart="45dp"
+                android:layout_alignParentStart="true"
                 android:layout_below="@+id/EditText"
-                android:layout_alignParentStart="true" />
+                android:layout_marginStart="45dp"
+                android:text="読み上げ開始" />
 
             <SeekBar
                 android:id="@+id/seekBar"
@@ -72,7 +72,7 @@
                 android:layout_alignParentEnd="true"
                 android:layout_alignParentStart="true"
                 android:layout_marginTop="26dp"
-                android:hint="読み上げるマストドンのURL" />
+                android:text="https://mstdn-workers.com" />
 
             <CheckBox
                 android:id="@+id/cfgCheckBoxReadNote"
@@ -111,10 +111,10 @@
                 android:id="@+id/button2"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginEnd="43dp"
-                android:text="読み上げ停止"
+                android:layout_alignParentEnd="true"
                 android:layout_below="@+id/EditText"
-                android:layout_alignParentEnd="true" />
+                android:layout_marginEnd="43dp"
+                android:text="読み上げ停止" />
 
             <TextView
                 android:id="@+id/textView2"

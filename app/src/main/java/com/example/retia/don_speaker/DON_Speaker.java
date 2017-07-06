@@ -9,23 +9,19 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.SeekBar;
 import android.widget.TextView;
-
+import com.google.gson.Gson;
+import java.io.IOException;
+import okhttp3.*;
 
 import java.util.Locale;
 
-//"https://techbooster.org/android/application/550/"から引用
 public class DON_Speaker extends AppCompatActivity
         implements View.OnClickListener, TextToSpeech.OnInitListener {
 
     private TextToSpeech    tts;
     private Button buttonSpeech;
     private Button buttonStopSpeech;
-    private Button buttonSlow;
-    private Button buttonNormal;
-    private Button buttonFast;
-    private Button buttonLowPitch;
-    private Button buttonNormalPitch;
-    private Button buttonHighPitch;
+
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -115,12 +111,38 @@ public class DON_Speaker extends AppCompatActivity
     }
 
     private void speechText() {
-        String string = ((EditText)findViewById(R.id.EditText)).getText().toString();
-        if (0 < string.length()) {
+        Request request = new Request.Builder()
+                .url(((EditText)findViewById(R.id.EditText)).getText().toString()
+                        + "/api/v1/timelines/public?local=true")
+                .get()
+                .build();
 
-            tts.speak(string, TextToSpeech.QUEUE_FLUSH, null);
-            // TODO: 読み上げが中断されて新しく読み上げるのでストックできるようにする。
-        }
+
+        OkHttpClient client = new OkHttpClient();
+
+        client.newCall(request).enqueue(new Callback() {
+            @Override
+            public void onFailure(Call call, IOException e) {
+                System.out.println("Error");
+            }
+
+            @Override
+            public void onResponse(Call call, Response response) throws IOException {
+
+                String result = response.body().string();
+
+                Gson gson = new Gson();
+
+                UserEntity[] userEntity = gson.fromJson(result, UserEntity[].class);
+
+                for (int i = 19; i >= 0; i--) {
+                    tts.speak(userEntity[i].getContent().replaceAll("<.+?>", "")
+                            ,TextToSpeech.QUEUE_ADD, null
+                    );
+                }
+
+            }
+        });
     }
 
     private void stopSpeech() {
@@ -128,33 +150,13 @@ public class DON_Speaker extends AppCompatActivity
          // 読み上げ中なら止める
          tts.stop();
          }
-
-        // 読み上げ開始
     }
 
     @Override
     public void onClick(View v) {
-        if (buttonSpeech == v) {
+        if (buttonSpeech == v){
             speechText();
-        /**} else if (buttonSlow == v) {
-            // 再生速度の設定
-            tts.setSpeechRate(SPEECH_SLOW);
-        } else if (buttonNormal == v) {
-            // 再生速度の設定
-            tts.setSpeechRate(SPEECH_NORMAL);
-        } else if (buttonFast == v) {
-            // 再生速度の設定
-            tts.setSpeechRate(SPEECH_FAST);
-        } else if (buttonLowPitch == v) {
-            // 再生ピッチの設定
-            tts.setPitch(PITCH_LOW);
-        } else if (buttonNormalPitch == v) {
-            // 再生ピッチの設定
-            tts.setPitch(PITCH_NORMAL);
-        } else if (buttonHighPitch == v) {
-            // 再生ピッチの設定
-            tts.setPitch(PITCH_HIGH);**/
-        } else if (buttonStopSpeech == v) {
+        }else if (buttonStopSpeech == v) {
             stopSpeech();
         }
     }
