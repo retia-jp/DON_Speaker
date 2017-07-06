@@ -5,18 +5,11 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.util.Log;
-import android.widget.Button;
-import android.widget.EditText;
-import android.widget.SeekBar;
-import android.widget.TextView;
+import android.widget.*;
 import com.google.gson.Gson;
 import java.io.IOException;
 import okhttp3.*;
-
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.List;
-import java.util.Locale;
+import java.util.*;
 
 public class DON_Speaker extends AppCompatActivity
         implements View.OnClickListener, TextToSpeech.OnInitListener {
@@ -24,6 +17,7 @@ public class DON_Speaker extends AppCompatActivity
     private TextToSpeech tts;
     private Button buttonSpeech;
     private Button buttonStopSpeech;
+    private int tootId = 0;
 
 
     @Override
@@ -114,6 +108,7 @@ public class DON_Speaker extends AppCompatActivity
 
     private void speechText() {
         Request request = new Request.Builder()
+                //TODO:関係ないURL入れたときの例外処理
                 .url(((EditText)findViewById(R.id.EditText)).getText().toString()
                         + "/api/v1/timelines/public?local=true")
                 .get()
@@ -141,10 +136,15 @@ public class DON_Speaker extends AppCompatActivity
 
                 Collections.reverse(list);
 
+                //TODO:ローカルか連合かの選択
+                //TODO:溜まりすぎたキューの開放or読み上げ速度自動調整
                 for (UserEntity i : list) {
-                    tts.speak(i.getContent().replaceAll("<.+?>", "")
-                            ,TextToSpeech.QUEUE_ADD, null
-                    );
+                    if (tootId < i.getId()) {
+                        tootId = i.getId();
+                        tts.speak(i.getContent().replaceAll("<.+?>", "")
+                                , TextToSpeech.QUEUE_ADD, null
+                        );
+                    }
                 }
 
             }
