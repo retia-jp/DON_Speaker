@@ -13,12 +13,15 @@ import com.google.gson.Gson;
 import java.io.IOException;
 import okhttp3.*;
 
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.List;
 import java.util.Locale;
 
 public class DON_Speaker extends AppCompatActivity
         implements View.OnClickListener, TextToSpeech.OnInitListener {
 
-    private TextToSpeech    tts;
+    private TextToSpeech tts;
     private Button buttonSpeech;
     private Button buttonStopSpeech;
 
@@ -34,10 +37,8 @@ public class DON_Speaker extends AppCompatActivity
         final TextView textSpeed = (TextView)findViewById(R.id.textView);
 
         // ボタンのClickListenerの登録
-        buttonSpeech = (Button)findViewById(R.id.button);
-        buttonStopSpeech = (Button)findViewById(R.id.button2);
-        buttonSpeech.setOnClickListener(this);
-        buttonStopSpeech.setOnClickListener(this);
+        findViewById(R.id.speekStartBtn).setOnClickListener(this);
+        findViewById(R.id.speekStopBtn).setOnClickListener(this);
 
         // TextToSpeechオブジェクトの生成
         tts = new TextToSpeech(this, this);
@@ -87,6 +88,7 @@ public class DON_Speaker extends AppCompatActivity
         );
     }
 
+
     @Override
     protected void onDestroy() {
         super.onDestroy();
@@ -135,8 +137,12 @@ public class DON_Speaker extends AppCompatActivity
 
                 UserEntity[] userEntity = gson.fromJson(result, UserEntity[].class);
 
-                for (int i = 19; i >= 0; i--) {
-                    tts.speak(userEntity[i].getContent().replaceAll("<.+?>", "")
+                List<UserEntity> list = Arrays.asList(userEntity);
+
+                Collections.reverse(list);
+
+                for (UserEntity i : list) {
+                    tts.speak(i.getContent().replaceAll("<.+?>", "")
                             ,TextToSpeech.QUEUE_ADD, null
                     );
                 }
@@ -154,10 +160,24 @@ public class DON_Speaker extends AppCompatActivity
 
     @Override
     public void onClick(View v) {
-        if (buttonSpeech == v){
+        /*if (buttonSpeech == v){
             speechText();
         }else if (buttonStopSpeech == v) {
             stopSpeech();
+        }*/
+        if (v != null) {
+            switch (v.getId()) {
+                case R.id.speekStartBtn:
+                    speechText();
+                    break;
+
+                case R.id.speekStopBtn:
+                    stopSpeech();
+                    break;
+
+                default:
+                    break;
+            }
         }
     }
 
