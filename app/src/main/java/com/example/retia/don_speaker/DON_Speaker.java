@@ -108,6 +108,8 @@ public class DON_Speaker extends AppCompatActivity
     }
 
     private void speechText() {
+        final String apiUrl = ((EditText)findViewById(R.id.EditText)).getText().toString()
+                + "/api/v1/timelines/public?local=true";
         if(mTimer == null) {
             mTimer = new Timer(true);
             mTimer.schedule(new TimerTask() {
@@ -117,8 +119,7 @@ public class DON_Speaker extends AppCompatActivity
 
                     Request request = new Request.Builder()
                             //TODO:関係ないURL入れたときの例外処理
-                            .url(((EditText) findViewById(R.id.EditText)).getText().toString()
-                                    + "/api/v1/timelines/public?local=true")
+                            .url(apiUrl)
                             .get()
                             .build();
 
