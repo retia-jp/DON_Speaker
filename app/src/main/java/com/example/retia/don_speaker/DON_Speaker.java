@@ -14,11 +14,12 @@ import java.util.*;
 public class DON_Speaker extends AppCompatActivity
         implements View.OnClickListener, TextToSpeech.OnInitListener {
 
+    boolean ttsLoop;
+    Timer mTimer = null;
     private TextToSpeech tts;
     private Button buttonSpeech;
     private Button buttonStopSpeech;
     private int tootId = 0;
-
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -107,51 +108,66 @@ public class DON_Speaker extends AppCompatActivity
     }
 
     private void speechText() {
-        Request request = new Request.Builder()
-                //TODO:関係ないURL入れたときの例外処理
-                .url(((EditText)findViewById(R.id.EditText)).getText().toString()
-                        + "/api/v1/timelines/public?local=true")
-                .get()
-                .build();
+        if(mTimer == null) {
+            mTimer = new Timer(true);
+            mTimer.schedule(new TimerTask() {
+                @Override
+                public void run() {
 
 
-        OkHttpClient client = new OkHttpClient();
+                    Request request = new Request.Builder()
+                            //TODO:関係ないURL入れたときの例外処理
+                            .url(((EditText) findViewById(R.id.EditText)).getText().toString()
+                                    + "/api/v1/timelines/public?local=true")
+                            .get()
+                            .build();
 
-        client.newCall(request).enqueue(new Callback() {
-            @Override
-            public void onFailure(Call call, IOException e) {
-                System.out.println("Error");
-            }
 
-            @Override
-            public void onResponse(Call call, Response response) throws IOException {
+                    OkHttpClient client = new OkHttpClient();
 
-                String result = response.body().string();
+                    client.newCall(request).enqueue(new Callback() {
+                        @Override
+                        public void onFailure(Call call, IOException e) {
+                            System.out.println("Error");
+                        }
 
-                Gson gson = new Gson();
+                        @Override
+                        public void onResponse(Call call, Response response) throws IOException {
 
-                UserEntity[] userEntity = gson.fromJson(result, UserEntity[].class);
+                            String result = response.body().string();
 
-                List<UserEntity> list = Arrays.asList(userEntity);
+                            Gson gson = new Gson();
 
-                Collections.reverse(list);
+                            UserEntity[] userEntity = gson.fromJson(result, UserEntity[].class);
 
-                //TODO:ローカルか連合かの選択
-                //TODO:溜まりすぎたキューの開放or読み上げ速度自動調整
-                for (UserEntity i : list) {
-                    if (tootId < i.getId()) {
-                        tootId = i.getId();
-                        tts.speak(i.getContent().replaceAll("<.+?>", "")
-                                , TextToSpeech.QUEUE_ADD, null
-                        );
-                    }
+                            List<UserEntity> list = Arrays.asList(userEntity);
+
+                            Collections.reverse(list);
+
+                            //TODO:ローカルか連合かの選択
+                            //TODO:溜まりすぎたキューの開放or読み上げ速度自動調整
+                            for (UserEntity i : list) {
+                                if (tootId < i.getId()) {
+                                    tootId = i.getId();
+                                    tts.speak(i.getContent().replaceAll("<.+?>", "")
+                                            , TextToSpeech.QUEUE_ADD, null
+                                    );
+                                }
+                            }
+
+                        }
+                    });
                 }
 
-            }
-        });
+            }, 0, 5000);
+        }
     }
 
     private void stopSpeech() {
+        if(mTimer != null){
+            mTimer.cancel();
+            mTimer = null;
+        }
         if (tts.isSpeaking()) {
          // 読み上げ中なら止める
          tts.stop();
