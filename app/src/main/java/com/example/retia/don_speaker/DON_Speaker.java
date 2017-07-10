@@ -41,7 +41,8 @@ public class DON_Speaker extends AppCompatActivity
 
         // 音量シークバーの値を表示
         textVolume.setText(":"+sbVolume.getProgress());
-        params.put(TextToSpeech.Engine.KEY_PARAM_VOLUME, String.valueOf(sbVolume.getProgress()/100f));
+        params.put(TextToSpeech.Engine.KEY_PARAM_VOLUME
+                ,String.valueOf(sbVolume.getProgress()/200f));
 
         sbVolume.setOnSeekBarChangeListener(
                 new SeekBar.OnSeekBarChangeListener() {
@@ -49,7 +50,8 @@ public class DON_Speaker extends AppCompatActivity
                                                   int progress, boolean fromUser) {
                         // ツマミをドラッグしたときに呼ばれる
                         textVolume.setText(":" + sbVolume.getProgress());
-                        params.put(TextToSpeech.Engine.KEY_PARAM_VOLUME, String.valueOf(sbVolume.getProgress()/100f));
+                        params.put(TextToSpeech.Engine.KEY_PARAM_VOLUME
+                                ,String.valueOf(sbVolume.getProgress()/200f));
 
                     }
 
@@ -142,13 +144,11 @@ public class DON_Speaker extends AppCompatActivity
                 @Override
                 public void run() {
 
-
                     Request request = new Request.Builder()
                             //TODO:関係ないURL入れたときの例外処理
                             .url(apiUrl)
                             .get()
                             .build();
-
 
                     OkHttpClient client = new OkHttpClient();
 
