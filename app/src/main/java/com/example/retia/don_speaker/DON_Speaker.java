@@ -20,6 +20,8 @@ public class DON_Speaker extends AppCompatActivity
     private Button buttonSpeech;
     private Button buttonStopSpeech;
     private int tootId = 0;
+    private HashMap<String, String> params = new HashMap<String, String>();
+
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -30,6 +32,8 @@ public class DON_Speaker extends AppCompatActivity
         final TextView textVolume = (TextView)findViewById(R.id.textView5);
         final SeekBar sBSpeed = (SeekBar)findViewById(R.id.seekBar2);
         final TextView textSpeed = (TextView)findViewById(R.id.textView);
+        final SeekBar sBPitch = (SeekBar)findViewById(R.id.seekBar3);
+        final TextView textPitch = (TextView)findViewById(R.id.textView7);
 
         // ボタンのClickListenerの登録
         findViewById(R.id.speekStartBtn).setOnClickListener(this);
@@ -40,6 +44,7 @@ public class DON_Speaker extends AppCompatActivity
 
         // 音量シークバーの値を表示
         textVolume.setText(":"+sbVolume.getProgress());
+        params.put(TextToSpeech.Engine.KEY_PARAM_VOLUME, String.valueOf(sbVolume.getProgress()/100f));
 
         sbVolume.setOnSeekBarChangeListener(
                 new SeekBar.OnSeekBarChangeListener() {
@@ -47,6 +52,7 @@ public class DON_Speaker extends AppCompatActivity
                                                   int progress, boolean fromUser) {
                         // ツマミをドラッグしたときに呼ばれる
                         textVolume.setText(":" + sbVolume.getProgress());
+                        params.put(TextToSpeech.Engine.KEY_PARAM_VOLUME, String.valueOf(sbVolume.getProgress()/100f));
 
                     }
 
@@ -70,6 +76,29 @@ public class DON_Speaker extends AppCompatActivity
                         // ツマミをドラッグしたときに呼ばれる
                         textSpeed.setText(":" + sBSpeed.getProgress()/10f);
                         tts.setSpeechRate(sBSpeed.getProgress()/10f);
+                    }
+
+                    public void onStartTrackingTouch(SeekBar seekBar) {
+
+                    }
+
+                    public void onStopTrackingTouch(SeekBar seekBar) {
+
+                    }
+                }
+        );
+
+        // 音声ピッチシークバーの値を表示
+        textPitch.setText(":"+sBPitch.getProgress()/10f);
+        tts.setPitch(sBPitch.getProgress()/10f);
+
+        sBPitch.setOnSeekBarChangeListener(
+                new SeekBar.OnSeekBarChangeListener() {
+                    public void onProgressChanged(SeekBar seekBar,
+                                                  int progress, boolean fromUser) {
+                        // ツマミをドラッグしたときに呼ばれる
+                        textPitch.setText(":" + sBPitch.getProgress()/10f);
+                        tts.setPitch(sBPitch.getProgress()/10f);
                     }
 
                     public void onStartTrackingTouch(SeekBar seekBar) {
@@ -150,8 +179,9 @@ public class DON_Speaker extends AppCompatActivity
                             for (UserEntity i : list) {
                                 if (tootId < i.getId()) {
                                     tootId = i.getId();
+
                                     tts.speak(i.getContent().replaceAll("<.+?>", "")
-                                            , TextToSpeech.QUEUE_ADD, null
+                                            , TextToSpeech.QUEUE_ADD, params
                                     );
                                 }
                             }
