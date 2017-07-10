@@ -14,11 +14,8 @@ import java.util.*;
 public class DON_Speaker extends AppCompatActivity
         implements View.OnClickListener, TextToSpeech.OnInitListener {
 
-    boolean ttsLoop;
     Timer mTimer = null;
     private TextToSpeech tts;
-    private Button buttonSpeech;
-    private Button buttonStopSpeech;
     private int tootId = 0;
     private HashMap<String, String> params = new HashMap<String, String>();
 
@@ -125,7 +122,7 @@ public class DON_Speaker extends AppCompatActivity
     @Override
     public void onInit(int status) {
         if (TextToSpeech.SUCCESS == status) {
-            Locale locale = Locale.ENGLISH;
+            Locale locale = Locale.JAPANESE;
             if (tts.isLanguageAvailable(locale) >= TextToSpeech.LANG_AVAILABLE) {
                 tts.setLanguage(locale);
             } else {
