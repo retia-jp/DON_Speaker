@@ -1,7 +1,7 @@
 package com.example.retia.don_speaker;
 
+import android.app.Activity;
 import android.speech.tts.TextToSpeech;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.util.Log;
@@ -11,7 +11,7 @@ import java.io.IOException;
 import okhttp3.*;
 import java.util.*;
 
-public class DON_Speaker extends AppCompatActivity
+public class DON_Speaker extends Activity
         implements View.OnClickListener, TextToSpeech.OnInitListener {
 
     Timer mTimer = null;
