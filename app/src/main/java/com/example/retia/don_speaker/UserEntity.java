@@ -11,6 +11,8 @@ public class UserEntity {
     private int id;
     @SerializedName("content")
     private String content;
+    @SerializedName("account")
+    private AccountEntity account;
 
     public int getId() {
         return id;
@@ -18,5 +20,9 @@ public class UserEntity {
 
     public String getContent() {
         return content;
+    }
+
+    public AccountEntity getAccount() {
+        return account;
     }
 }

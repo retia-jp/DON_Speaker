@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-    <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -9,182 +9,162 @@
     android:paddingTop="@dimen/activity_vertical_margin"
     tools:context="com.example.retia.don_speaker.DON_Speaker">
 
-        <RelativeLayout
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="700dp"
+        android:visibility="visible">
+
+        <Button
+            android:id="@+id/speekStartBtn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentStart="true"
+            android:layout_below="@+id/EditText"
+            android:layout_marginStart="45dp"
+            android:text="読み上げ開始" />
+
+        <SeekBar
+            android:id="@+id/seekBar"
+            style="@android:style/Widget.Material.SeekBar"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentStart="true"
+            android:layout_below="@+id/textView2"
+            android:max="200"
+            android:progress="100" />
 
-            <Button
-                android:id="@+id/speekStartBtn"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentStart="true"
-                android:layout_below="@+id/EditText"
-                android:layout_marginStart="45dp"
-                android:text="読み上げ開始" />
+        <TextView
+            android:id="@+id/textView3"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentStart="true"
+            android:layout_below="@+id/seekBar"
+            android:layout_marginTop="23dp"
+            android:text="読み上げ速度"
+            android:textSize="18sp" />
 
-            <SeekBar
-                android:id="@+id/seekBar"
-                style="@android:style/Widget.DeviceDefault.Light.SeekBar"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentEnd="true"
-                android:layout_alignParentStart="true"
-                android:layout_below="@+id/textView2"
-                android:max="200"
-                android:progress="100" />
+        <SeekBar
+            android:id="@+id/seekBar2"
+            style="@android:style/Widget.Material.Light.SeekBar"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentStart="true"
+            android:layout_below="@+id/textView3"
+            android:indeterminate="false"
+            android:max="50"
+            android:progress="10" />
 
-            <TextView
-                android:id="@+id/textView3"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentStart="true"
-                android:layout_below="@+id/seekBar"
-                android:layout_marginTop="23dp"
-                android:text="読み上げ速度"
-                android:textSize="18sp" />
+        <TextView
+            android:id="@+id/editText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentStart="true"
+            android:layout_below="@+id/seekBar3"
+            android:layout_marginTop="17dp"
+            android:text="読み上げ設定"
+            android:textSize="18sp" />
 
-            <SeekBar
-                android:id="@+id/seekBar2"
-                style="@android:style/Widget.DeviceDefault.Light.SeekBar"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentEnd="true"
-                android:layout_alignParentStart="true"
-                android:layout_below="@+id/textView3"
-                android:indeterminate="false"
-                android:max="50"
-                android:progress="10" />
+        <EditText
+            android:id="@+id/EditText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentStart="true"
+            android:layout_marginTop="26dp"
+            android:hint="https://mstdn-workers.com"
+            android:text="https://mstdn-workers.com" />
 
-            <TextView
-                android:id="@+id/editText"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentStart="true"
-                android:layout_below="@+id/seekBar3"
-                android:layout_marginTop="17dp"
-                android:text="読み上げる内容"
-                android:textSize="18sp" />
 
-            <EditText
-                android:id="@+id/EditText"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentEnd="true"
-                android:layout_alignParentStart="true"
-                android:layout_marginTop="26dp"
-                android:text="https://mstdn-workers.com" />
+        <Button
+            android:id="@+id/speekStopBtn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_below="@+id/EditText"
+            android:layout_marginEnd="43dp"
+            android:text="読み上げ停止" />
 
-            <CheckBox
-                android:id="@+id/cfgCheckBoxReadNote"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignStart="@+id/speekStartBtn"
-                android:layout_below="@+id/cfgCheckBoxReadID"
-                android:layout_toEndOf="@+id/textView3"
-                android:checked="true"
-                android:text="注意書き"
-                android:textSize="15sp" />
+        <TextView
+            android:id="@+id/textView2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentStart="true"
+            android:layout_below="@+id/speekStartBtn"
+            android:layout_marginTop="54dp"
+            android:text="読み上げ音量"
+            android:textSize="18sp" />
 
-            <CheckBox
-                android:id="@+id/cfgCheckBoxReadID"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignStart="@+id/speekStartBtn"
-                android:layout_below="@+id/cfgCheckBoxReadTime"
-                android:layout_toEndOf="@+id/textView3"
-                android:checked="true"
-                android:text="アカウント名"
-                android:textSize="15sp" />
+        <TextView
+            android:id="@+id/textView5"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignBaseline="@+id/textView2"
+            android:layout_alignBottom="@+id/textView2"
+            android:layout_toEndOf="@+id/textView2"
+            android:text="設定値表示"
+            android:textSize="18sp" />
 
-            <CheckBox
-                android:id="@+id/cfgCheckBoxReadToot"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignStart="@+id/speekStartBtn"
-                android:layout_below="@+id/cfgCheckBoxReadNote"
-                android:layout_toEndOf="@+id/textView3"
-                android:checked="true"
-                android:text="トゥート本文"
-                android:textSize="15sp" />
+        <TextView
+            android:id="@+id/textView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_above="@+id/seekBar2"
+            android:layout_alignStart="@+id/textView5"
+            android:text="設定値表示"
+            android:textSize="18sp" />
 
-            <Button
-                android:id="@+id/speekStopBtn"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentEnd="true"
-                android:layout_below="@+id/EditText"
-                android:layout_marginEnd="43dp"
-                android:text="読み上げ停止" />
+        <SeekBar
+            android:id="@+id/seekBar3"
+            style="@android:style/Widget.Material.Light.SeekBar"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentStart="true"
+            android:layout_below="@+id/textView6"
+            android:max="20"
+            android:progress="10" />
 
-            <TextView
-                android:id="@+id/textView2"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentStart="true"
-                android:layout_below="@+id/speekStartBtn"
-                android:layout_marginTop="54dp"
-                android:text="読み上げ音量"
-                android:textSize="18sp" />
+        <TextView
+            android:id="@+id/textView6"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentStart="true"
+            android:layout_below="@+id/seekBar2"
+            android:layout_marginTop="25dp"
+            android:text="音声ピッチ"
+            android:textSize="18sp" />
 
-            <CheckBox
-                android:id="@+id/cfgCheckBoxReadTime"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignStart="@+id/speekStartBtn"
-                android:layout_below="@+id/editText"
-                android:layout_toEndOf="@+id/textView3"
-                android:checked="true"
-                android:text="タイムスタンプ"
-                android:textSize="15sp" />
+        <TextView
+            android:id="@+id/textView7"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignBottom="@+id/textView6"
+            android:layout_toEndOf="@+id/textView6"
+            android:text="設定値表示"
+            android:textSize="18sp" />
 
-            <TextView
-                android:id="@+id/textView5"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignBaseline="@+id/textView2"
-                android:layout_alignBottom="@+id/textView2"
-                android:layout_toEndOf="@+id/textView2"
-                android:text="設定値表示"
-                android:textSize="18sp" />
+        <CheckBox
+            android:id="@+id/checkBox"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignEnd="@+id/editText"
+            android:layout_below="@+id/editText"
+            android:layout_toStartOf="@+id/textView7"
+            android:checked="true"
+            android:text="URL省略"
+            android:textSize="15sp" />
 
-            <TextView
-                android:id="@+id/textView"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_above="@+id/seekBar2"
-                android:layout_alignStart="@+id/textView5"
-                android:text="設定値表示"
-                android:textSize="18sp" />
+        <CheckBox
+            android:id="@+id/checkBox2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignStart="@+id/checkBox"
+            android:layout_below="@+id/checkBox"
+            android:checked="true"
+            android:text="ユーザー名の読み上げ"
+            android:textSize="15sp" />
 
-            <SeekBar
-                android:id="@+id/seekBar3"
-                style="@android:style/Widget.DeviceDefault.Light.SeekBar"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentEnd="true"
-                android:layout_alignParentStart="true"
-                android:layout_below="@+id/textView6"
-                android:max="20"
-                android:progress="10" />
-
-            <TextView
-                android:id="@+id/textView6"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentStart="true"
-                android:layout_below="@+id/seekBar2"
-                android:layout_marginTop="25dp"
-                android:text="音声ピッチ"
-                android:textSize="18sp" />
-
-            <TextView
-                android:id="@+id/textView7"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignBottom="@+id/textView6"
-                android:layout_toEndOf="@+id/textView6"
-                android:text="設定値表示"
-                android:textSize="18sp" />
-
-        </RelativeLayout>
-    </ScrollView>
+    </RelativeLayout>
+</ScrollView>

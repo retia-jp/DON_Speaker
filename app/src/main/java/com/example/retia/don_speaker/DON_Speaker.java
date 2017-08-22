@@ -1,8 +1,10 @@
 package com.example.retia.don_speaker;
 
 import android.app.Activity;
+import android.app.DownloadManager;
 import android.speech.tts.TextToSpeech;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.util.Log;
 import android.widget.*;
@@ -11,13 +13,16 @@ import java.io.IOException;
 import okhttp3.*;
 import java.util.*;
 
-public class DON_Speaker extends Activity
+public class DON_Speaker extends AppCompatActivity
         implements View.OnClickListener, TextToSpeech.OnInitListener {
 
     Timer mTimer = null;
     private TextToSpeech tts;
     private int tootId = 0;
     private HashMap<String, String> params = new HashMap<String, String>();
+    private Request request;
+    private String ltlContent;
+
 
 
     @Override
@@ -31,6 +36,8 @@ public class DON_Speaker extends Activity
         final TextView textSpeed = (TextView)findViewById(R.id.textView);
         final SeekBar sBPitch = (SeekBar)findViewById(R.id.seekBar3);
         final TextView textPitch = (TextView)findViewById(R.id.textView7);
+
+
 
         // ボタンのClickListenerの登録
         findViewById(R.id.speekStartBtn).setOnClickListener(this);
@@ -136,6 +143,8 @@ public class DON_Speaker extends Activity
     }
 
     private void speechText() {
+        final CheckBox checkBox = (CheckBox)findViewById(R.id.checkBox);
+        final CheckBox checkBox2 = (CheckBox)findViewById(R.id.checkBox2);
         final String apiUrl = ((EditText)findViewById(R.id.EditText)).getText().toString()
                 + "/api/v1/timelines/public?local=true";
         if(mTimer == null) {
@@ -144,11 +153,12 @@ public class DON_Speaker extends Activity
                 @Override
                 public void run() {
 
-                    Request request = new Request.Builder()
+                    request = new Request.Builder()
                             //TODO:関係ないURL入れたときの例外処理
                             .url(apiUrl)
                             .get()
                             .build();
+
 
                     OkHttpClient client = new OkHttpClient();
 
@@ -171,15 +181,30 @@ public class DON_Speaker extends Activity
 
                             Collections.reverse(list);
 
-                            //TODO:ローカルか連合かの選択
-                            //TODO:溜まりすぎたキューの開放or読み上げ速度自動調整
+                            AccountEntity[] accountEntity = gson.fromJson(result, AccountEntity[].class);
+
+                            List<AccountEntity> accountList = Arrays.asList(accountEntity);
+
+                            Collections.reverse(accountList);
+
                             for (UserEntity i : list) {
                                 if (tootId < i.getId()) {
                                     tootId = i.getId();
 
-                                    tts.speak(i.getContent().replaceAll("<.+?>", "")
-                                            , TextToSpeech.QUEUE_ADD, params
-                                    );
+                                    ltlContent = i.getContent();
+
+                                    ltlContent = ltlContent.replaceAll("<.+?>", ""); //HTMLタグの除去
+
+                                    if(checkBox.isChecked()) {
+                                        ltlContent = ltlContent.replaceAll(
+                                                "https?://[\\w/:%#\\$&\\?\\(\\)~\\.=\\+\\-]+", "URL省略");//URLの除去
+                                    }
+
+                                    if(checkBox2.isChecked()) {
+                                        ltlContent = ltlContent + "あっと" + i.getAccount().getDisplayName();
+                                    }
+
+                                    tts.speak(ltlContent, TextToSpeech.QUEUE_ADD, params);
                                 }
                             }
 
