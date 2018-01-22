@@ -8,13 +8,13 @@ import com.google.gson.annotations.*;
 
 public class UserEntity {
     @SerializedName("id")
-    private int id;
+    private long id;
     @SerializedName("content")
     private String content;
     @SerializedName("account")
     private AccountEntity account;
 
-    public int getId() {
+    public long getId() {
         return id;
     }
 

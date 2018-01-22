@@ -18,7 +18,7 @@ public class DON_Speaker extends AppCompatActivity
 
     Timer mTimer = null;
     private TextToSpeech tts;
-    private int tootId = 0;
+    private long tootId = 0;
     private HashMap<String, String> params = new HashMap<String, String>();
     private Request request;
     private String ltlContent;
@@ -201,7 +201,7 @@ public class DON_Speaker extends AppCompatActivity
                                     }
 
                                     if(checkBox2.isChecked()) {
-                                        ltlContent = ltlContent + "あっと" + i.getAccount().getDisplayName();
+                                        ltlContent = ltlContent + "あっと" + i.getAccount().getDisplayName();//ユーザー名読み上げ
                                     }
 
                                     tts.speak(ltlContent, TextToSpeech.QUEUE_ADD, params);
